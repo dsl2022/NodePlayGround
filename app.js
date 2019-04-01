@@ -101,7 +101,33 @@ app.get('/cipher',(req,res)=>{
 
 })
 
+app.get('/lotto',(req,res)=>{
+  const numArray = req.query.numbers;
+  const computerGeneratedArray = [];
+  console.log(numArray,'test array')
+  for(i=1;i<7;i++){
+    computerGeneratedArray.push(Math.floor(Math.random()*20)+1)
+  }
+  console.log(computerGeneratedArray,'test computer array')
 
+  
+  let result = numArray.filter( num =>
+    computerGeneratedArray.includes(Number(num))
+	)
+  console.log(result,'test result')
+  if(result.length<4){
+    res.send('Sorry, you lose')
+  }else if(result.length===4){
+    res.send('Congratulations, you win a free ticket')
+  }else if(result.length===5){
+    res.send('Congratulations! You win $100!')    
+  }else if(result.length===6){
+    res.send('Wow! Unbelievable! You could have won the mega millions!')
+  }
+
+
+  
+})
 
 app.listen(8000, () => {
   console.log('Express server is listening on port 8000!');
